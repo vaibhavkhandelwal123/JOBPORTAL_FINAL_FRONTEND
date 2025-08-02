@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.logo{
+    aspect-ratio: 3/2;
+    object-fit: contain;
+    mix-blend-mode: color-burn;
+    height: 80px;
+    width: 80px;
+}
+
+@layer base{
+    ul,ol{
+        list-style: revert;
+        font-size: medium;
+    }
+    p{
+        font-size: medium;
+    }
+    li{
+        margin-left: 1em;
+    }
+}
