@@ -1,6 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "https://jobportal-final-backend-7rka.onrender.com",
 });
 
 axiosInstance.interceptors.request.use(
