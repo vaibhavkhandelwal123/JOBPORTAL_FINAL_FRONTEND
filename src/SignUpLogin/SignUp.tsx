@@ -14,11 +14,12 @@ import { registerUser } from "../Services/UsersService";
 import { SignUpValidation } from "../Services/FormValidation";
 import { NotificationError, NotificationSuccess } from "./NotificationAny";
 
+// --- Types ---
 type FormField = "name" | "email" | "password" | "confirmPassword" | "accountType";
 
-type FormData = {
-  [key in FormField]: string;
-};
+type FormData = Record<FormField, string>;
+
+type FormError = Partial<Record<FormField, string>>;
 
 const initialForm: FormData = {
   name: "",
@@ -28,42 +29,27 @@ const initialForm: FormData = {
   accountType: "APPLICANT",
 };
 
-const blankError: FormData = {
-  name: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  accountType: "",
-};
-
 const SignUp = () => {
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
   const [data, setData] = useState<FormData>(initialForm);
-  const [formError, setFormError] = useState<FormData>(blankError);
+  const [formError, setFormError] = useState<FormError>({});
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement> | string
-  ) => {
+  const handleChange = (event: any) => {
     if (typeof event === "string") {
       setData({ ...data, accountType: event });
       return;
     }
 
     const { name, value } = event.target;
-    const fieldName = name as FormField;
-
-    const updatedData = { ...data, [fieldName]: value };
+    const updatedData = { ...data, [name]: value };
     setData(updatedData);
 
-    const error = SignUpValidation(fieldName, value);
+    const error = SignUpValidation(name, value);
     let confirmPasswordError = formError.confirmPassword;
 
-    if (
-      fieldName === "password" ||
-      fieldName === "confirmPassword"
-    ) {
+    if (name === "password" || name === "confirmPassword") {
       if (
         updatedData.password &&
         updatedData.confirmPassword &&
@@ -77,7 +63,7 @@ const SignUp = () => {
 
     setFormError({
       ...formError,
-      [fieldName]: error,
+      [name]: error,
       confirmPassword: confirmPasswordError,
     });
   };
@@ -89,21 +75,19 @@ const SignUp = () => {
     }
 
     let valid = true;
-    const newFormError: FormData = { ...blankError };
+    const newFormError: FormError = {};
 
-    for (const key in data) {
-      const field = key as FormField;
+    (Object.keys(data) as FormField[]).forEach((key) => {
+      if (key === "accountType") return;
 
-      if (field === "accountType") continue;
-
-      if (field !== "confirmPassword") {
-        newFormError[field] = SignUpValidation(field, data[field]);
-      } else if (data[field] !== data.password) {
-        newFormError[field] = "Passwords do not match";
+      if (key !== "confirmPassword") {
+        newFormError[key] = SignUpValidation(key, data[key]);
+      } else if (data[key] !== data.password) {
+        newFormError[key] = "Passwords do not match";
       }
 
-      if (newFormError[field]) valid = false;
-    }
+      if (newFormError[key]) valid = false;
+    });
 
     setFormError(newFormError);
 
@@ -113,10 +97,7 @@ const SignUp = () => {
         .then((res) => {
           console.log("Registration successful:", res);
           setData(initialForm);
-          NotificationSuccess(
-            "Registration successful",
-            "Redirecting to Login Page..."
-          );
+          NotificationSuccess("Registration successful", "Redirecting to Login Page...");
           setTimeout(() => {
             setLoader(false);
             navigate("/login");
@@ -125,10 +106,7 @@ const SignUp = () => {
         .catch((err) => {
           setLoader(false);
           console.error("Registration failed:", err);
-          NotificationError(
-            "Registration failed",
-            err.response?.data?.errorMessage || "Something went wrong"
-          );
+          NotificationError("Registration failed", err.response?.data?.errorMessage || "Unknown error");
         });
     }
   };
@@ -233,7 +211,7 @@ const SignUp = () => {
           <span
             onClick={() => {
               navigate("/login");
-              setFormError(blankError);
+              setFormError({});
               setData(initialForm);
             }}
             className="text-bright-sun-400 sm-mx:text-sm xs-mx:text-xs hover:underline cursor-pointer"
