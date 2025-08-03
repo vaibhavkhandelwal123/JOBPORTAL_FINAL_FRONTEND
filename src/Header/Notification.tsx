@@ -1,4 +1,4 @@
-import { Indicator, Menu, Notification as Noti, Stack } from "@mantine/core";
+import { Indicator, Menu, Notification as Noti} from "@mantine/core";
 import { useEffect, useState } from "react";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { useSelector } from "react-redux";
@@ -12,7 +12,7 @@ const Notification = () => {
   const [notifications, setNotifications] = useState<any>([]);
   const unread = (index: number) => {
     let notis = [...notifications];
-    notis = notis.filter((noti: any, i: number) => i != index);
+    notis = notis.filter((_: any, i: number) => i != index);
     setNotifications(notis);
     readNotification(
       notifications[index].id)

@@ -1,4 +1,4 @@
-import { Button, Divider } from "@mantine/core"
+import { Button} from "@mantine/core"
 import { ArrowLeft } from "lucide-react"
 import { Link, useParams } from "react-router-dom"
 import JobDesc from "../JobDesc/JobDesc"

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { fields } from "../Data/ProfileData";
 import SelectInput from "./SelectInput";
 import { ActionIcon, NumberInput } from "@mantine/core";
-import { BriefcaseBusiness, Check, Edit2, MapPin, Save, X } from "lucide-react";
+import { BriefcaseBusiness, Check, Edit2, MapPin, X } from "lucide-react";
 import { useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";

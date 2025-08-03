@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { fields } from "../Data/ProfileData";
 import SelectInput from "./SelectInput";
 import { Button, Checkbox, Textarea } from "@mantine/core";

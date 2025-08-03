@@ -5,7 +5,7 @@ import CompanyJobs from "./CompanyJobs";
 import CompanyEmployees from "./CompanyEmployees";
 import React from "react";
 
-const Company = (props: any) => {
+const Company = () => {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

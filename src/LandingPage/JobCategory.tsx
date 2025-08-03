@@ -13,7 +13,7 @@ const JobCategory = () => {
       <div className="text-lg sm-mx:text-base xs-mx:text-sm mb-10 mx-auto text-mine-shaft-300 text-center sm-mx:w-11/12 w-1/2">
         Explore diverse job opportunnities tailored to your skills and interests.Start your career journey today!
       </div>
-      <Carousel slideSize="22%" controlsOffset="md"  loop className="focus-visible:[&_button]:outline-none
+      <Carousel slideSize="22%" controlsOffset="md" className="focus-visible:[&_button]:outline-none
       [&_button]:!bg-bright-sun-400 [&_button]:!border-none [&_button]:hover:opacity-75 [&_button]:opacity-0 hover:[&_button]:opacity-100 "
       nextControlIcon={<IconArrowRight className="h-8 w-8" />}
       previousControlIcon={<IconArrowLeft className="h-8 w-8" />}

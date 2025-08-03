@@ -1,5 +1,5 @@
 import { ActionIcon } from '@mantine/core'
-import { Edit2, Plus, Save, X } from 'lucide-react'
+import { Edit2, Plus, X } from 'lucide-react'
 import React from 'react'
 import ExpInput from './ExpInput';
 import ExpCard from './ExpCard';

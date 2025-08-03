@@ -5,11 +5,8 @@ import { formatData } from "../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import { NotificationSuccess } from "../SignUpLogin/NotificationAny";
-import { useMediaQuery } from "@mantine/hooks";
 
 const ExpCard = (props: any) => {
-  
-  const matches = useMediaQuery("(min-width: 475px)");
   const [edit,setEdit] = useState(false);
   const dispatch = useDispatch();
   const profile = useSelector((state:any)=>state.profile);

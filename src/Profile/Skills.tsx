@@ -1,5 +1,5 @@
 import { ActionIcon, TagsInput } from "@mantine/core"
-import { Check, Edit2, Save, X } from "lucide-react"
+import { Check, Edit2, X } from "lucide-react"
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";

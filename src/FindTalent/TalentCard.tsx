@@ -1,8 +1,8 @@
 import { Avatar, Button, Divider, Modal, Text } from "@mantine/core";
-import { DateInput, TimeInput, TimePicker } from "@mantine/dates";
+import { DateInput, TimePicker } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import { CalendarDaysIcon, Heart, MapPin } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProfile } from "../Services/ProfileService";
 import { changeAppStatus } from "../Services/JobService";
@@ -20,7 +20,7 @@ const TalentCard = (props: any) => {
   const [date, setDate] = useState<Date | null>(null);
   const [time, setTime] = useState('');
   const [profile, setProfile] = useState<any>({});
-  const [job, setJob] = useState<any>({});
+  const [, setJob] = useState<any>({});
   const [loading,setLoading] = useState(false);
   useEffect(() => {
     if (props.applicantId)
@@ -59,7 +59,7 @@ const TalentCard = (props: any) => {
 
     const minutes = rawMin;
 
-    const interviewDate = new Date(date);
+    const interviewDate = new Date(date!);
     interviewDate.setHours(hour);
     interviewDate.setMinutes(minutes);
     interviewDate.setSeconds(0);
@@ -73,7 +73,7 @@ const TalentCard = (props: any) => {
     console.log("Scheduled Interview:", interview);
   }
   changeAppStatus(interview)
-    .then((res: any) => {
+    .then(() => {
       if (status === "INTERVIEWING")
         NotificationSuccess("Interview Scheduled", "Interview scheduled successfully");
       else if (status === "OFFERED")
@@ -84,7 +84,7 @@ const TalentCard = (props: any) => {
       setLoading(false);
       window.location.reload();
     })
-    .catch((err: any) => {
+    .catch(() => {
       setLoading(false);
       NotificationError("Error", "Failed to schedule interview. Please try again later.");
     });

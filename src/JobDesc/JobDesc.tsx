@@ -29,7 +29,7 @@ const JobDesc = (props:any) => {
     }
 
     const handleCloseButton=()=>{
-      postJob({...props,jobStatus:"CLOSED"}).then((res)=>{
+      postJob({...props,jobStatus:"CLOSED"}).then(()=>{
         NotificationSuccess("Success","Job Closed Successfully");
       }).catch((err)=>{
         NotificationError("Error",err.response.data.errorMessage);

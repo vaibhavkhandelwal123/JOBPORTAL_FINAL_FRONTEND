@@ -6,10 +6,8 @@ import { isNotEmpty, useForm } from "@mantine/form";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import { NotificationSuccess } from "../SignUpLogin/NotificationAny";
-import { useMediaQuery } from "@mantine/hooks";
 
 const CertiInput = (props: any) => {
-  const matches = useMediaQuery("(min-width: 475px)");
   const form = useForm({
     mode: "controlled",
     validateInputOnChange: true,
