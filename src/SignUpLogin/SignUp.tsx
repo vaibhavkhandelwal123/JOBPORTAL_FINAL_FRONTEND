@@ -7,14 +7,20 @@ import {
   Radio,
   TextInput,
 } from "@mantine/core";
-import { AtSignIcon, LockKeyholeIcon} from "lucide-react";
+import { AtSignIcon, LockKeyholeIcon } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../Services/UsersService";
 import { SignUpValidation } from "../Services/FormValidation";
 import { NotificationError, NotificationSuccess } from "./NotificationAny";
 
-const initialForm = {
+type FormField = "name" | "email" | "password" | "confirmPassword" | "accountType";
+
+type FormData = {
+  [key in FormField]: string;
+};
+
+const initialForm: FormData = {
   name: "",
   email: "",
   password: "",
@@ -22,50 +28,59 @@ const initialForm = {
   accountType: "APPLICANT",
 };
 
-const blankError = {
+const blankError: FormData = {
   name: "",
   email: "",
   password: "",
   confirmPassword: "",
   accountType: "",
 };
+
 const SignUp = () => {
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
-  const [data, setData] = useState(initialForm);
-  const [formError, setFormError] = useState<{ [key: string]: string }>(
-    blankError
-  );
+  const [data, setData] = useState<FormData>(initialForm);
+  const [formError, setFormError] = useState<FormData>(blankError);
   const [termsAccepted, setTermsAccepted] = useState(false);
 
-  const handleChange = (event: any) => {
-  if (typeof event === "string") {
-    setData({ ...data, accountType: event });
-    return;
-  }
-
-  const { name, value } = event.target;
-  const updatedData = { ...data, [name]: value };
-  setData(updatedData);
-
-  const error = SignUpValidation(name, value);
-  let confirmPasswordError = formError.confirmPassword;
-
-  if (name === "password" || name === "confirmPassword") {
-    if (updatedData.password && updatedData.confirmPassword && updatedData.password !== updatedData.confirmPassword) {
-      confirmPasswordError = "Passwords do not match";
-    } else {
-      confirmPasswordError = "";
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement> | string
+  ) => {
+    if (typeof event === "string") {
+      setData({ ...data, accountType: event });
+      return;
     }
-  }
 
-  setFormError({
-    ...formError,
-    [name]: error,
-    confirmPassword: confirmPasswordError,
-  });
-};
+    const { name, value } = event.target;
+    const fieldName = name as FormField;
 
+    const updatedData = { ...data, [fieldName]: value };
+    setData(updatedData);
+
+    const error = SignUpValidation(fieldName, value);
+    let confirmPasswordError = formError.confirmPassword;
+
+    if (
+      fieldName === "password" ||
+      fieldName === "confirmPassword"
+    ) {
+      if (
+        updatedData.password &&
+        updatedData.confirmPassword &&
+        updatedData.password !== updatedData.confirmPassword
+      ) {
+        confirmPasswordError = "Passwords do not match";
+      } else {
+        confirmPasswordError = "";
+      }
+    }
+
+    setFormError({
+      ...formError,
+      [fieldName]: error,
+      confirmPassword: confirmPasswordError,
+    });
+  };
 
   const handleSubmit = () => {
     if (!termsAccepted) {
@@ -74,19 +89,20 @@ const SignUp = () => {
     }
 
     let valid = true;
-    const newFormError: { [key: string]: string } = {};
+    const newFormError: FormData = { ...blankError };
 
     for (const key in data) {
-      if (key === "accountType") continue;
+      const field = key as FormField;
 
+      if (field === "accountType") continue;
 
-      if (key !== "confirmPassword") {
-        newFormError[key] = SignUpValidation(key, data[key]);
-      } else if (data[key] !== data.password) {
-        newFormError[key] = "Passwords do not match";
+      if (field !== "confirmPassword") {
+        newFormError[field] = SignUpValidation(field, data[field]);
+      } else if (data[field] !== data.password) {
+        newFormError[field] = "Passwords do not match";
       }
 
-      if (newFormError[key]) valid = false;
+      if (newFormError[field]) valid = false;
     }
 
     setFormError(newFormError);
@@ -111,7 +127,7 @@ const SignUp = () => {
           console.error("Registration failed:", err);
           NotificationError(
             "Registration failed",
-            err.response.data.errorMessage
+            err.response?.data?.errorMessage || "Something went wrong"
           );
         });
     }
@@ -190,7 +206,7 @@ const SignUp = () => {
               value="EMPLOYER"
               label="Employer"
             />
-</div>
+          </div>
         </Radio.Group>
 
         <Checkbox
@@ -217,7 +233,7 @@ const SignUp = () => {
           <span
             onClick={() => {
               navigate("/login");
-              setFormError(initialForm);
+              setFormError(blankError);
               setData(initialForm);
             }}
             className="text-bright-sun-400 sm-mx:text-sm xs-mx:text-xs hover:underline cursor-pointer"
