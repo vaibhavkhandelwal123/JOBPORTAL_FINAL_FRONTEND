@@ -28,9 +28,11 @@ const PostedJobsPage = () => {
   return (
     <div className="min-h-[90vh] bg-mine-shaft-950 font-['poppins'] px-5">
       <Divider size="xs" />
-      <Button my="xs" size="sm" autoContrast  onClick={open}>
-        All Jobs
-      </Button>
+      {matches && (
+        <Button my="xs" size="sm" autoContrast  onClick={open}>
+          All Jobs
+        </Button>
+      )}
       <Drawer overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} opened={opened} size="xs" onClose={close} title="All Jobs">
         <PostedJob job={job} jobList={jobList} />
       </Drawer>
