@@ -27,8 +27,13 @@ const Header = () => {
   ];
   const token = localStorage.getItem("token") || "";
   useEffect(() => {
+  const intervalId = setInterval(() => {
     setUpResponseInterceptor(navigate);
-  }, [navigate]);
+  }, 10000);
+
+  return () => clearInterval(intervalId);
+}, [navigate]);
+
   useEffect(() => {
     if (token != "") {
       if (localStorage.getItem("token") != "") {
