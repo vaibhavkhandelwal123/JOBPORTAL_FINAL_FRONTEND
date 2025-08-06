@@ -6,9 +6,11 @@ import { getAllJobs } from "../Services/JobService";
 import { useDispatch, useSelector } from "react-redux";
 import { resetFilter } from "../Slices/FilterSlice";
 import { resetSort } from "../Slices/SortSlice";
+import { Skeleton } from "@mantine/core";
 
 const Jobs = () => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
  const [jobList, setJobList] = useState([{}]);
    const filter = useSelector((state: any) => state.filter);
    const [filtered, setFiltered] = useState([{}]);
@@ -16,11 +18,14 @@ const Jobs = () => {
  useEffect(()=>{
 dispatch(resetFilter());
 dispatch(resetSort());
+setLoading(true);
   getAllJobs().then((res) => {
       setJobList(res.filter((job:any)=>job.jobStatus=="ACTIVE"));
     }).catch((error) => {
       console.log("Failed to fetch jobs", error);
-    })
+    }).finally(() => {
+      setLoading(false);
+    });
  },[]);
 
  useEffect(()=>{
@@ -75,9 +80,16 @@ dispatch(resetSort());
         <Sort sort="job"/>
       </div>
       <div className="mt-10 flex flex-wrap gap-5">
-       {filtered.length?filtered.map((job:any, index:any) => (
-        <JobCard key={index} {...job} />
-      )):<div className="text-xl font-semibold">No Jobs Found</div>}
+        {
+          loading ? <div className="font-semibold flex gap-5 sm-mx:flex-wrap sm-mx:gap-3">
+            <Skeleton height={250} width={300} className="!rounded-xl"/>
+            <Skeleton height={250} width={300} className="!rounded-xl"/>
+            <Skeleton height={250} width={300} className="!rounded-xl"/>
+            <Skeleton height={250} width={300} className="!rounded-xl"/>
+          </div>
+        : filtered.length ? filtered.map((job:any, index:any) => (
+          <JobCard key={index} {...job} />
+        )) : <div className="text-xl font-semibold">No Jobs Found</div>}
       </div>
     </div>
   );

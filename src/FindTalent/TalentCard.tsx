@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider, Modal, Text } from "@mantine/core";
+import { Avatar, Button, Divider, Modal, Skeleton, Text } from "@mantine/core";
 import { DateInput, TimePicker } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import { CalendarDaysIcon, Heart, MapPin } from "lucide-react";
@@ -18,11 +18,13 @@ const TalentCard = (props: any) => {
   const [app,{open:openApp,close:closeApp}]=useDisclosure(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [date, setDate] = useState<Date | null>(null);
+  const [load, setLoad] = useState(false);
   const [time, setTime] = useState('');
   const [profile, setProfile] = useState<any>({});
   const [, setJob] = useState<any>({});
   const [loading,setLoading] = useState(false);
   useEffect(() => {
+    setLoad(true);
     if (props.applicantId)
       getProfile(props.applicantId)
         .then((res: any) => {
@@ -33,6 +35,8 @@ const TalentCard = (props: any) => {
         })
         .catch((err: any) => {
           console.error("Error fetching profile:", err);
+        }).finally(() => {
+          setLoad(false);
         });
     else setProfile(props);
   }, []);
@@ -90,7 +94,13 @@ const TalentCard = (props: any) => {
     });
 };
 
-  return (
+  return (<>{
+          load ? <div className="font-semibold flex gap-5 sm-mx:flex-wrap sm-mx:gap-3">
+            <Skeleton height={250} width={300} className="!rounded-xl"/>
+            <Skeleton height={250} width={300} className="!rounded-xl"/>
+            <Skeleton height={250} width={300} className="!rounded-xl"/>
+          </div>
+        : 
     <div className="bg-mine-shaft-900 p-4 w-96 bs-mx:w-[50%] md-mx:w-full flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
@@ -251,7 +261,8 @@ const TalentCard = (props: any) => {
           </div>
         </div>
       </Modal>
-    </div>
+    </div>}
+    </>
   );
 };
 

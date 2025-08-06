@@ -11,11 +11,13 @@ const PostedJobsPage = () => {
   const matches = useMediaQuery("(max-width: 800px)");
   const [opened, { open, close }] = useDisclosure(false);
   const { id } = useParams();
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state: any) => state.user);
   const [jobList, setJobList] = useState<any[]>([]);
   const [job, setJob] = useState<any>({});
   useEffect(() => {
     window.scrollTo(0, 0);
+    setLoading(true);
     getJobPostedBy(user.id)
       .then((res) => {
         setJobList(res);
@@ -23,6 +25,9 @@ const PostedJobsPage = () => {
       })
       .catch((error) => {
         console.error("Error fetching jobs:", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [id]);
   return (
@@ -34,10 +39,10 @@ const PostedJobsPage = () => {
         </Button>
       )}
       <Drawer overlayProps={{ backgroundOpacity: 0.5, blur: 4 }} opened={opened} size="xs" onClose={close} title="All Jobs">
-        <PostedJob job={job} jobList={jobList} />
+        <PostedJob job={job} jobList={jobList} loading={loading} />
       </Drawer>
       <div className="flex gap-5 justify-around py-5">
-        {!matches && <PostedJob job={job} jobList={jobList} />}
+        {!matches && <PostedJob job={job} jobList={jobList} loading={loading} />}
         <PostedJobDesc {...job} />
       </div>
     </div>

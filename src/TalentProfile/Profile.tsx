@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider } from "@mantine/core";
+import { Avatar, Button, Divider, Skeleton } from "@mantine/core";
 import { BriefcaseBusiness, MapPin } from "lucide-react";
 import ExpCard from "./ExpCard";
 import CertCard from "./CertCard";
@@ -11,8 +11,10 @@ const Profile = () => {
   
   const matches = useMediaQuery("(max-width: 475px)");
   const { id } = useParams();
+  const [loading, setLoading] = useState(false);
   const [profile, setProfile] = useState<any>({});
   useEffect(() => {
+    setLoading(true);
     window.scrollTo(0, 0);
     getProfile(id)
       .then((res) => {
@@ -20,9 +22,16 @@ const Profile = () => {
       })
       .catch((err) => {
         console.log(err);
+      }).finally(() => {
+        setLoading(false);
       });
   }, [id]);
-  return (
+  return (<>{
+          loading ? <div className="font-semibold flex gap-5 sm-mx:flex-wrap sm-mx:gap-3">
+            <Skeleton height={1100} width={1020} className="!rounded-xl"/>
+            
+          </div>
+        :
     <div className="w-2/3 lg-mx:w-full">
       <div className="relative">
         <img
@@ -96,7 +105,8 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>}
+  </>
   );
 };
 

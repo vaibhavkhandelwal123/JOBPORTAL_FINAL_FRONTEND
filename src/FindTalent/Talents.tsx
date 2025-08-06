@@ -4,9 +4,11 @@ import { getAllProfiles } from "../Services/ProfileService";
 import NewTalentCard from "./NewTalentCard";
 import { useDispatch, useSelector } from "react-redux";
 import { resetFilter } from "../Slices/FilterSlice";
+import { Skeleton } from "@mantine/core";
 
 const Talents = () => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state: any) => state.user);
   const sort = useSelector((state:any)=>state.sort);
   const filter = useSelector((state: any) => state.filter);
@@ -14,12 +16,16 @@ const Talents = () => {
   const [talentList, setTalentList] = useState([{}]);
   useEffect(() => {
     dispatch(resetFilter());
+    setLoading(true);
     getAllProfiles()
       .then((res) => {
         setTalentList(res);
       })
       .catch((error) => {
         console.log("Failed to fetch talents", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -76,7 +82,14 @@ const Talents = () => {
         <Sort talent/>
       </div>
       <div className="mt-10 flex flex-wrap gap-5">
-        {filtered.length?filtered.map(
+        {
+                  loading ? <div className="font-semibold flex gap-5 sm-mx:flex-wrap sm-mx:gap-3">
+                    <Skeleton height={250} width={300} className="!rounded-xl"/>
+                    <Skeleton height={250} width={300} className="!rounded-xl"/>
+                    <Skeleton height={250} width={300} className="!rounded-xl"/>
+                    <Skeleton height={250} width={300} className="!rounded-xl"/>
+                  </div>
+                : filtered.length?filtered.map(
           (profile: any, index: number) =>
             profile.id != user.id && <NewTalentCard key={index} {...profile} />
         ):<div className="text-xl font-semibold">No Talent Found</div>}

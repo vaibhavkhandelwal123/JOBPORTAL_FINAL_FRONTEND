@@ -1,4 +1,4 @@
-import { Tabs } from "@mantine/core";
+import { Skeleton, Tabs } from "@mantine/core";
 import PostedJobCard from "./PostedJobCard";
 import { useEffect, useState } from "react";
 
@@ -21,6 +21,13 @@ const PostedJob = (props:any) => {
           
            <div className="flex flex-col gap-4 mt-5">
             {
+          props.loading ? <div className="font-semibold flex gap-5 flex-wrap sm-mx:gap-3">
+            <Skeleton height={70} width={300} className="!rounded-xl"/>
+            <Skeleton height={70} width={300} className="!rounded-xl"/>
+            <Skeleton height={70} width={300} className="!rounded-xl"/>
+            <Skeleton height={70} width={300} className="!rounded-xl"/>
+          </div>
+        : 
               props.jobList?.filter((job:any)=>job?.jobStatus==activeTab).map((item:any,index:any)=><PostedJobCard key={index} {...item}/>)
             }
            </div>

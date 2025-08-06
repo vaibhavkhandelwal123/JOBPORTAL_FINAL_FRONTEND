@@ -1,4 +1,4 @@
-import { Tabs } from "@mantine/core";
+import { Skeleton, Tabs } from "@mantine/core";
 import Card from "./Card";
 import { useEffect, useState } from "react";
 import { getAllJobs } from "../Services/JobService";
@@ -7,11 +7,13 @@ import { NotificationError } from "../SignUpLogin/NotificationAny";
 
 const JobHistory = () => {
   const profile=useSelector((state: any) => state.profile);
+  const [loading, setLoading] = useState(false);
   const user=useSelector((state: any) => state.user);
   const [activeTab, setActiveTab] = useState<any>("APPLIED");
   const [jobList, setJobList] = useState<any>([]);
   const [showList, setShowList] = useState<any>([]);
 useEffect(() => {
+    setLoading(true);
     getAllJobs()
       .then((res) => {
         setJobList(res);
@@ -31,6 +33,9 @@ useEffect(() => {
           "Error",
           err?.response?.data?.errorMessage || err.message
         );
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
   const handleTabChange = (value: string|null) => {
@@ -70,9 +75,16 @@ useEffect(() => {
 
           <Tabs.Panel value={activeTab} className="[&>div]:w-full">
             <div className="mt-10 flex flex-wrap gap-5">
-              {showList.map((job: any, index: any) => (
+              {
+                        loading ? <div className="font-semibold flex gap-5 sm-mx:flex-wrap sm-mx:gap-3">
+                          <Skeleton height={250} width={300} className="!rounded-xl"/>
+                          <Skeleton height={250} width={300} className="!rounded-xl"/>
+                          <Skeleton height={250} width={300} className="!rounded-xl"/>
+                          <Skeleton height={250} width={300} className="!rounded-xl"/>
+                        </div>
+                      :showList.length?showList.map((job: any, index: any) => (
                 <Card key={index} {...job} app={job.applicants} {...{[activeTab.toLowerCase()]: true}} />
-              ))}
+              )):<div className="text-xl font-semibold">Not Available</div>}
             </div>
           </Tabs.Panel>
         </Tabs>
