@@ -9,9 +9,12 @@ import {
   NotificationError,
   NotificationSuccess,
 } from "../SignUpLogin/NotificationAny";
+import { useMediaQuery } from "@mantine/hooks";
 
 const Resume = () => {
   const [cv, setCV] = useState<string>("");
+  const flag = useMediaQuery("(min-width: 640px)");
+  const f = useMediaQuery("(min-width: 600px)");
   const [loading, setLoading] = useState(false);
   const user = useSelector((state: any) => state.user);
   const [inputValue, setInputValue] = useState(false);
@@ -81,22 +84,29 @@ const Resume = () => {
     });
   }, [user && user.id]);
 
+  const del = () => {
+    setCV("");
+    setName("");
+    form.setFieldValue("resume", null);
+  }
   return (
     <div className="flex flex-col justify-center p-5">
       <div className="text-3xl font-['poppins'] text-center text-mine-shaft-300">
         Resume
       </div>
 
-      <div className="flex gap-5 justify-center">
+      <div className="flex gap-5 justify-center sm-mx:auto mt-5 flex-col sm:flex-row">
         <FileInput
           onChange={handleFileChange}
           value={form.values.resume}
-          rightSection={<FileText />}
+          rightSection={cv?(inputValue && <ActionIcon onClick={del} className="" variant="subtle" color="red.8">
+                <Trash2 size={20} />
+              </ActionIcon>):<FileText />}
           placeholder="Resume"
-          rightSectionPointerEvents="none"
+          
           mt="md"
           error={form.errors.resume}
-          w="30%"
+          w={flag ? "30%" : "100%"}
           accept="application/pdf"
         />
         <Button
@@ -129,8 +139,8 @@ const Resume = () => {
         <div className="mt-5 flex justify-center">
           <iframe
             src={cv}
-            width="1200"
-            height="1400"
+            width="100%"
+            height={f ? "1000px" : "500px"}
             title="Resume Preview"
             style={{
               border: "1px solid #ccc",

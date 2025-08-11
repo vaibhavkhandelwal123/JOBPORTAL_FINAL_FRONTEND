@@ -5,8 +5,10 @@ import { useSelector } from "react-redux";
 import { Check } from "lucide-react";
 import { getNotification, readNotification } from "../Services/NotiService";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mantine/hooks";
 const Notification = () => {
   const navigate = useNavigate();
+  const flag = useMediaQuery("(min-width: 640px)");
   const user = useSelector((state: any) => state.user);
   const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState<any>([]);
@@ -28,7 +30,7 @@ const Notification = () => {
       .catch((err) => console.log(err));
   }, [user]);
   return (
-    <Menu shadow="md" width={400} opened={open} onChange={setOpen}>
+    <Menu shadow="md" width={flag?400:300} opened={open} onChange={setOpen}>
       <Menu.Target>
         <div className="bg-mine-shaft-900 rounded-full p-1.5">
           <Indicator color="bright-sun.4" size={8} disabled={notifications.length<=0} offset={6} processing>
