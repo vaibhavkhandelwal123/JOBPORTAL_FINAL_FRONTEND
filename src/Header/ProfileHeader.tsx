@@ -51,7 +51,9 @@ const ProfileHeader = () => {
         <Menu.Item leftSection={<MessageCircle size={14} />}>
           Messages
         </Menu.Item>
+        <Link to='/resume'>
         <Menu.Item leftSection={<FileText size={14} />}>Resume</Menu.Item>
+        </Link>
         <Menu.Item
           leftSection={<Moon size={14} />}
           rightSection={

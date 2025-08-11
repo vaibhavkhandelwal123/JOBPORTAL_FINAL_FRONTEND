@@ -116,7 +116,7 @@ const SignUp = () => {
       <LoadingOverlay
         visible={loader}
         zIndex={1000}
-        className="translate-x-1/2"
+        className="-translate-x-1/2"
         overlayProps={{ radius: "sm", blur: 2 }}
         loaderProps={{ color: "bright-sun.4", type: "bars" }}
       />

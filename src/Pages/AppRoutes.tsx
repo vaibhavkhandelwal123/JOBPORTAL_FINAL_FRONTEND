@@ -17,6 +17,7 @@ import SignUpPage from "./SignUpPage"
 import PostedJobsPage from "./PostedJobsPage"
 import ProtectedRoutes from "../Services/ProtectedRoutes"
 import PublicRoutes from "../Services/PublicRoute"
+import Resume from "../Header/Resume"
 
 const AppRoutes = () => {
   
@@ -40,6 +41,7 @@ const AppRoutes = () => {
             <Route path="/talent-profile/:id" element={<ProtectedRoutes allowedRoles={["EMPLOYER"]}><TalentProfile /></ProtectedRoutes>} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/forgot" element={<Forgot />} />
+            <Route path="/resume" element={<ProtectedRoutes allowedRoles={["EMPLOYER"]}><Resume /></ProtectedRoutes>} />
             <Route path="*" element={<HomePage />} />
           </Routes>
         </main>

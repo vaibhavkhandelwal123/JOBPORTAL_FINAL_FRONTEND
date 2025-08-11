@@ -52,7 +52,6 @@ const getBase64=(file:any)=>{
 };
 
 
-
   function openResume(base64String:string) { 
   if (base64String.startsWith("data:")) {
     base64String = base64String.split(",")[1];
