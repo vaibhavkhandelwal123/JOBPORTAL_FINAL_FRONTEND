@@ -54,22 +54,6 @@ const ProfileHeader = () => {
         <Link to='/resume'>
         <Menu.Item leftSection={<FileText size={14} />}>Resume</Menu.Item>
         </Link>
-        <Menu.Item
-          leftSection={<Moon size={14} />}
-          rightSection={
-            <Switch
-              checked={checked}
-              onChange={(event) => setChecked(event.currentTarget.checked)}
-              size="md"
-              color="dark.5"
-              onLabel={<Sun size={16} style={{ color: "yellow" }} />}
-              offLabel={<MoonStar size={16} style={{ color: "skyblue" }} />}
-            />
-          }
-        >
-          Dark Mode
-        </Menu.Item>
-
         <Menu.Divider />
 
         <Menu.Item
