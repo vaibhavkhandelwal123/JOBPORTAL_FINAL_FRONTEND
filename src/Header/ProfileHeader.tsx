@@ -1,11 +1,8 @@
-import { Menu, Avatar, Switch } from "@mantine/core";
+import { Menu, Avatar} from "@mantine/core";
 import {
   FileText,
   LogOut,
   MessageCircle,
-  Moon,
-  MoonStar,
-  Sun,
   UserCircle,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -18,7 +15,6 @@ import { setProfile } from "../Slices/ProfileSlice";
 const ProfileHeader = () => {
   const user = useSelector((state:any) => state.user);
   const profile = useSelector((state:any) => state.profile);
-  const [checked, setChecked] = useState(false);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
