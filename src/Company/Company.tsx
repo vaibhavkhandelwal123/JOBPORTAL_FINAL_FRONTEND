@@ -35,7 +35,7 @@ const Company = (props:any) => {
             <Avatar src="avatar-7.png" />
             <Avatar src="avatar-8.png" />
             <Avatar src="avatar-9.png" />
-            <Avatar>{props.size > 100 && props.size <= 1000 ? `+100` : props.size > 1000 && props.size < 9999 ? `+1k` : props.size >= 9999 && `+10k`}</Avatar>
+            <Avatar>{props.size >= 100 && props.size <= 1000 ? `+100` : props.size > 1000 && props.size < 9999 ? `+1k` : props.size >= 9999 && `+10k`}</Avatar>
           </Avatar.Group>
         </div>
         

@@ -14,7 +14,7 @@ const CompanyJobs = () => {
     getAllJobs().then((res: any) => {
       setJobs(res);
       const sameJobs = res.filter(
-        (job: any) => job.postedBy == id && job.status === "active"
+        (job: any) => job.postedBy == id && job.status === "ACTIVE"
       );
       setSame(sameJobs);
       setLoading(false);
