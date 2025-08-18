@@ -129,8 +129,8 @@ const SignUp = () => {
           value={data.name}
           onChange={handleChange}
           withAsterisk
-          label="Full Name"
-          placeholder="Your full name"
+          label="Name"
+          placeholder="Enter name"
         />
 
         <TextInput
