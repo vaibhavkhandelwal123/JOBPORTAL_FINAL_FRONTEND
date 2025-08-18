@@ -129,8 +129,8 @@ const SignUp = () => {
           value={data.name}
           onChange={handleChange}
           withAsterisk
-          label="Name"
-          placeholder="Enter name"
+          label="Name/Company Name"
+          placeholder="Enter Name/Company Name"
         />
 
         <TextInput
@@ -140,8 +140,8 @@ const SignUp = () => {
           value={data.email}
           withAsterisk
           leftSection={<AtSignIcon size={20} />}
-          label="Your email"
-          placeholder="Your email"
+          label="Your email/Company Email"
+          placeholder="Your email/Company Email"
         />
 
         <PasswordInput
