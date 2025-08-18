@@ -12,7 +12,7 @@ const ProfileSlice = createSlice({
     setProfile: (state, action) => {
       state = action.payload;
       return state;
-    },
+    }
   }
 });
 

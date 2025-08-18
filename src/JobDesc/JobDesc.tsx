@@ -8,9 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import { postJob } from "../Services/JobService";
 import { NotificationError, NotificationSuccess } from "../SignUpLogin/NotificationAny";
+import { useEffect, useState } from "react";
+import { getCompany } from "../Services/CompanyService";
 const JobDesc = (props:any) => {
   const profile = useSelector((state:any) => state.profile);
   const description = DomPurify.sanitize(props.description);
+  const [company, setCompany] = useState<any>({});
   const skillsRequired = props.skillsRequired ?? [];
   const dispatch = useDispatch();
   const handleSaveJob = () => {
@@ -28,6 +31,14 @@ const JobDesc = (props:any) => {
       dispatch(changeProfile(updatedProfile));
     }
 
+    useEffect(() => {
+      getCompany(props.postedBy).then((data:any) => {
+        setCompany(data);
+      }).catch((err:any) => {
+        console.error(err);
+      });
+    }, [props]);
+
     const handleCloseButton=()=>{
       postJob({...props,jobStatus:"CLOSED"}).then(()=>{
         NotificationSuccess("Success","Job Closed Successfully");
@@ -40,7 +51,9 @@ const JobDesc = (props:any) => {
       <div className="flex justify-between items-center flex-wrap">
         <div className="flex items-center gap-2 sm-mx:gap-5">
           <div className="p-3 bg-mine-shaft-800 rounded-xl shrink-0">
-            <img className="h-14 w-14 xs-mx:h-10 xs-mx:w-10" src={`/Logos/${props.company}.png`} alt="" />
+            <img className="h-14 w-14 xs-mx:h-10 xs-mx:w-10" src={company.pictures
+                  ? `data:image/png;base64,${company.pictures}`
+                  : `/Logos/${props.company}.png`} alt="" />
           </div>
           <div>
             <div className="font-semibold text-2xl sm-mx:text-xl xs-mx:text-lg">
@@ -136,14 +149,16 @@ const JobDesc = (props:any) => {
           <div className="flex justify-between mb-3 xs-mx:flex-wrap xs-mx:gap-2">
             <div className="flex items-center gap-2">
               <div className="p-3 bg-mine-shaft-800 rounded-xl">
-                <img className="h-8" src={`/Logos/${props.company}.png`} alt="" />
+                <img className="h-8" src={company.pictures
+                  ? `data:image/png;base64,${company.pictures}`
+                  : `/Logos/${props.company}.png`} alt="" />
               </div>
               <div className="flex flex-col">
                 <div className="font-medium text-lg">{props.company}</div>
-                <div className=" text-mine-shaft-300">10k+ Employees</div>
+                <div className=" text-mine-shaft-300">{company?.size ? `${company.size} Employees` : 'N/A'}</div>
               </div>
               </div>
-              <Link to={`/company/${props.company}`}  >
+              <Link to={`/company/${props.postedBy}`}  >
                 <Button color="bright-sun.5" variant="light">
                   Company Page
                 </Button>

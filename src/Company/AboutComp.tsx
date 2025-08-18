@@ -1,17 +1,30 @@
-import { companyData } from "../Data/CompanyData";
-
-const AboutComp = () => {
-  const company: { [key: string]: any } = companyData;
+const AboutComp = (props: any) => {
   return (
     <div className="flex flex-col gap-5">
-      {Object.keys(company).map((key, index) => (
-        key!='Name' && <div key={index}>
-            <div className="text-xl mb-3 font-semibold">{key}</div>
-            {key!='Website'&&<div className=" text-sm text-mine-shaft-300 text-justify">{key!="Specialties"?company[key]:company[key].map((item:string,index:number)=><span key={index}> &bull; {item}
-            </span>)}</div>}
-            {key=='Website'&&<a href={company[key]} className=" text-sm text-bright-sun-400 text-justify">{company[key]}</a>}
+      <div className="text-xl xs-mx:text-lg mb-3 font-md">{props.overview}</div>
+      <div className="text-xl xs-mx:text-lg font-semibold">Specialities</div>
+      <div className="flex flex-wrap gap-2 text-sm text-justify">
+        {props?.specialties?.map((item: string, index: number) => (
+          <span
+            className="bg-bright-sun-400 xs-mx:text-sm rounded-full p-1 text-black"
+            key={index}
+          >
+            {" "}
+            {item}
+          </span>
+        ))}
+      </div>
+      <div>
+        <div className="text-xl xs-mx:text-lg font-semibold">Website</div>
+        <div>
+          <a
+            href={props.website}
+            className=" text-sm text-bright-sun-400 text-justify"
+          >
+            {props.website}
+          </a>
         </div>
-      ))}
+      </div>
     </div>
   );
 };

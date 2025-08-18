@@ -5,8 +5,15 @@ import {formatInterviewTime, timeAgo } from "../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
 import { useEffect, useState } from "react";
+import { getCompany } from "../Services/CompanyService";
 
 const Card = (props: any) => {
+  const [company,setCompany] = useState<any>({});
+  useEffect(()=>{
+    getCompany(props.postedBy).then((res:any)=>{
+      setCompany(res);
+    });
+  },[props])
   const dispatch = useDispatch();
   const profile = useSelector((state: any) => state.profile);
   
@@ -43,7 +50,9 @@ useEffect(() => {
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
           <div className="p-2 bg-mine-shaft-800 rounded-md">
-            <img src={`/Logos/${props.company}.png`} alt="" />
+            <img src={company.pictures
+                  ? `data:image/png;base64,${company.pictures}`
+                  : `/Logos/${props.company}.png`} alt="" />
           </div>
           <div>
             <div className="font-semibold">{props.jobTitle}</div>

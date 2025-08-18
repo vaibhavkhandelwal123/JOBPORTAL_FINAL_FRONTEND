@@ -20,7 +20,6 @@ import PublicRoutes from "../Services/PublicRoute"
 import Resume from "../Header/Resume"
 
 const AppRoutes = () => {
-  
   return (
     <BrowserRouter>
       <div className="flex flex-col min-h-screen">
@@ -32,7 +31,7 @@ const AppRoutes = () => {
             <Route path="/find-talent" element={<ProtectedRoutes allowedRoles={["EMPLOYER"]}><FindTalent /></ProtectedRoutes>} />
             <Route path="/jobs/:id" element={<JobDescPage />} />
             <Route path="/apply-job/:id" element={<ProtectedRoutes allowedRoles={["APPLICANT"]}><ApplyJob /></ProtectedRoutes>} />
-            <Route path="/company" element={<CompanyPage />} />
+            <Route path="/company/:id" element={<CompanyPage />} />
             <Route path="/posted-job/:id" element={<ProtectedRoutes allowedRoles={["EMPLOYER"]}><PostedJobsPage /></ProtectedRoutes>} />
             <Route path="/job-history" element={<ProtectedRoutes allowedRoles={["APPLICANT"]}><JobHistoryPage /></ProtectedRoutes>} />
             <Route path="/post-job/:id" element={<ProtectedRoutes allowedRoles={["EMPLOYER"]}><Postjobs /></ProtectedRoutes>} />

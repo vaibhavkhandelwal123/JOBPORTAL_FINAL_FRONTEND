@@ -4,8 +4,16 @@ import { Link } from "react-router-dom";
 import { timeAgo } from "../Services/Utilities";
 import { useDispatch, useSelector } from "react-redux";
 import { changeProfile } from "../Slices/ProfileSlice";
+import { useEffect, useState } from "react";
+import { getCompany } from "../Services/CompanyService";
 
 const JobCard = (props:any) => {
+  const [company,setCompany] = useState<any>({});
+  useEffect(()=>{
+    getCompany(props.postedBy).then((res:any)=>{
+      setCompany(res);
+    });
+  },[props])
   const dispatch = useDispatch();
   const profile = useSelector((state:any) => state.profile);
   const handleSaveJob = () => {
@@ -25,9 +33,11 @@ const JobCard = (props:any) => {
     <div className="bg-mine-shaft-900 p-4 w-72 sm-mx:w-full flex flex-col gap-3 rounded-xl hover:shadow-[0_0_5px_1px_yellow] !shadow-bright-sun-400">
       <div className="flex justify-between">
         <div className="flex items-center gap-2">
-          <div className="p-2 bg-mine-shaft-800 rounded-md">
-            <img src={`/Logos/${props.company}.png`} alt="" />
-          </div>
+            <div className="p-2 bg-mine-shaft-800 rounded-md w-16 h-16 flex items-center justify-center">
+            <img src={company.pictures
+                  ? `data:image/png;base64,${company.pictures}`
+                  : `/Logos/${props.company}.png`} alt="" className="w-12 h-12 object-contain" />
+            </div>
           <div>
             <div className="font-semibold">{props.jobTitle}</div>
             <div className="text-xs">{props.company} &#x2022; {props.applicants?props.applicants.length:0} Applicants</div>

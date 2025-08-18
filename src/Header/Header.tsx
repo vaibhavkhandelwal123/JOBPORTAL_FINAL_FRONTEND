@@ -13,6 +13,7 @@ import { jwtDecode } from "jwt-decode";
 import { setUpResponseInterceptor } from "../Interceptor/AxiosInterceptor";
 import { useDisclosure } from "@mantine/hooks";
 import { X } from "lucide-react";
+import { getCompany } from "../Services/CompanyService";
 const Header = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
@@ -42,6 +43,13 @@ const Header = () => {
       }
     }
     if (token && user?.profileId) {
+      if(user.accountType == "EMPLOYER"){
+        getCompany(user?.profileId)
+          .then((data: any) => {
+            dispatch(setProfile(data));
+          })
+      }
+      else{
       getProfile(user?.profileId)
         .then((data: any) => {
           dispatch(setProfile(data));
@@ -49,6 +57,7 @@ const Header = () => {
         .catch((error: any) => {
           console.error(error);
         });
+      }
     }
   }, [token, navigate]);
   const location = useLocation();
