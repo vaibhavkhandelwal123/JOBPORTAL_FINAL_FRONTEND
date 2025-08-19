@@ -52,7 +52,7 @@ const ProfileHeader = () => {
         </div>:
         <div className="flex gap-2 items-center cursor-pointer">
           <div className="xs-mx:hidden">{user.name}</div>
-          <Avatar src={profile?.pictures ? `data:image/png;base64,${profile.pictures}` : `/Logos/${profile?.name}.png`} alt="it's me" />
+          <Avatar className="!w-16 !h-8 object-contain" src={profile?.pictures ? `data:image/png;base64,${profile.pictures}` : `/Logos/${profile?.name}.png`} alt="it's me" />
         </div>
         }
       </Menu.Target>

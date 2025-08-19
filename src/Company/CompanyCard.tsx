@@ -8,9 +8,13 @@ const CompanyCard = (props: any) => {
       <div className="flex justify-between  bg-mine-shaft-900 items-center rounded-lg p-2">
         <div className="flex items-center gap-2">
           <div className="p-2 bg-mine-shaft-800 rounded-md">
-            <img src={props.pictures
-                  ? `data:image/png;base64,${props.pictures}`
-                  : `/Logos/${props.name}.png`} alt="" />
+            <img
+              style={{ width: "120px", height: "100px" }}
+              src={props.pictures
+                ? `data:image/png;base64,${props.pictures}`
+                : `/Logos/${props.name}.png`}
+              alt=""
+            />
           </div>
           <div>
             <div className="font-semibold">{props.name}</div>

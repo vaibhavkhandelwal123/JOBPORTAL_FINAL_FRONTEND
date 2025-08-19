@@ -1,4 +1,4 @@
-import { Avatar, Divider, Overlay } from "@mantine/core";
+import { Divider, Overlay } from "@mantine/core";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {changeProfile, setProfile } from "../Slices/ProfileSlice";
@@ -45,10 +45,11 @@ const CompanyProfile = () => {
           />
           <div
             ref={ref}
-            className="absolute cursor-pointer flex items-center justify-center !rounded-full -bottom-1/3 md-mx:-bottom-10 sm-mx:-bottom-16  left-8"
+            className="absolute cursor-pointer flex items-center justify-center !rounded-full -bottom-1/3  sm-mx:-bottom-16  left-8"
           >
-            <Avatar
-              className="!h-48 !w-48 md-mx:!w-40 md-mx:!h-40 bg-mine-shaft-900  border-mine-shaft-950 border-8 rounded-full sm-mx:!w-36 sm-mx:!h-36 xs-mx:!w-32 xs-mx:!h-32 xsm-mx:!w-28"
+            <img
+              style={{ width: matches ? "200px" : "150px", height:matches ? "200px" : "150px" ,objectFit: "contain"}}
+              className=" bg-mine-shaft-900  border-mine-shaft-950 border-8 rounded-full "
               src={
                 profile.pictures
                   ? `data:image/png;base64,${profile.pictures}`

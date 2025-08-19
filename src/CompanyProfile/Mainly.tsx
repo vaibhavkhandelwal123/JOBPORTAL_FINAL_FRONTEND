@@ -1,6 +1,6 @@
 import { ActionIcon, Textarea} from "@mantine/core";
 import { BriefcaseBusiness, Check, Edit2, MapPin, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NotificationError, NotificationSuccess } from "../SignUpLogin/NotificationAny";
 import { updateCompany } from "../Services/CompanyService";
@@ -16,6 +16,12 @@ const mainly = () => {
   const [industry, setIndustry] = useState(profile.industry);
   const [edit, setEdit] = useState(false);
   
+  useEffect(() => {
+          setHeadQuarters(profile.headQuarters);
+          setIndustry(profile.industry);
+          setName(profile.name);
+      }, [profile.headQuarters, profile.industry, profile.name]);
+
   const handleSave = () => {
       let updatedProfile = { ...profile, name, headQuarters, industry };
       updateCompany(updatedProfile).then(() => {
