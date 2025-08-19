@@ -1,6 +1,8 @@
 import { Avatar, TextInput } from "@mantine/core";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 const DreamJob = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex sm-mx:flex-col-reverse items-center px-16 bs-mx:px-10 md-mx:px-5">
       <div className="flex flex-col w-[45%] sm-mx:w-[100%] gap-3">
@@ -14,18 +16,20 @@ const DreamJob = () => {
         </div>
         <div className="flex gap-3 mt-5 ">
           <TextInput
+            onFocus={() => navigate("/find-jobs")}
             className="bg-mine-shaft-900 rounded-lg py-1 px-2 text-mine-shaft-100  [&_input]:text-mine-shaft-100"
             variant="unstyled"
             label="Job title"
             placeholder="Software Engineer"
           />
           <TextInput
+            onFocus={() => navigate("/find-jobs")}
             className="bg-mine-shaft-900 rounded-lg py-1 px-2 text-mine-shaft-100  [&_input]:text-mine-shaft-100"
             variant="unstyled"
             label="Job Type"
             placeholder="Fulltime"
           />
-          <div className="flex items-center h-10 justify-center mt-3 bg-bright-sun-400 text-mine-shaft-100 rounded-lg p-2 cursor-pointer hover:bg-bright-sun-500 transition-all duration-300">
+          <div onClick={() => navigate("/find-jobs")} className="flex items-center h-10 justify-center mt-3 bg-bright-sun-400 text-mine-shaft-100 rounded-lg p-2 cursor-pointer hover:bg-bright-sun-500 transition-all duration-300">
             <SearchIcon className="h-[85%] w-[85%]" />
           </div>
         </div>

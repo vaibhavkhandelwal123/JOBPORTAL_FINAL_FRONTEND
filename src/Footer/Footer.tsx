@@ -40,12 +40,15 @@ const Footer = () => {
           <div key={index}>
             <div className="text-lg font-semibold mb-4 text-bright-sun-400">{item.title}</div>
             {item.link.map((link, linkIndex) => (
+              <Link
+              to={link.link}>
               <div
                 key={linkIndex}
                 className="text-mine-shaft-300 text-sm hover:text-bright-sun-400 cursor-pointer mb-1 hover:translate-x-2 transition duration-300 ease-in-out"
               >
-                {link}
+                {link.name}
               </div>
+              </Link>
             ))}
           </div>
         ))

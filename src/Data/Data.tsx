@@ -133,9 +133,9 @@ const work = [
     ];
 
     const footerLinks=[
-        {title:"Products" , link:["Find Job","Find Company","Find Employee"]},
-        {title:"Company" , link:["About Us","Contact Us","Privacy Policy","Terms & Conditions"]},
-        {title:"Support" , link:["Help & Support","FAQs","Feedback"]},
+        {title:"Products" , link:[{name:"Find Job", link:"/find-jobs"},{name:"Find Company", link:"/company/0"},{name:"Find Employee", link:"/find-talent"}]},
+        {title:"Company" , link:[{name:"About Us", link:"/about-us"},{name:"Contact Us", link:"/contact-us"},{name:"Privacy Policy", link:"/privacy-policy"},{name:"Terms & Conditions", link:"/terms-conditions"}]},
+        {title:"Support" , link:[{name:"Help & Support", link:"/help-support"},{name:"FAQs", link:"/faqs"},{name:"Feedback", link:"/feedback"}]},
     ]
 
 export { company, jobCategories, testimonials, work ,footerLinks};
